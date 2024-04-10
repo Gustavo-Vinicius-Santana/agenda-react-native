@@ -7,7 +7,7 @@ export default function Contacts ({navigation}){
 
     return(
         <View style={styles.boxContatos}>
-            <Text>SEUS CONTATOS</Text>
+            <Text style={styles.titulo}>SEUS CONTATOS</Text>
 
             <View style={styles.boxItem}>
                 <Text>NOME: Pedro</Text>

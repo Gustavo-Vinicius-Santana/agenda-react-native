@@ -1,6 +1,12 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+    titulo:{
+        textAlign: 'center',
+        marginTop: 20,
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
     boxContatos:{
         width: '100%',
         alignItems:"center",
