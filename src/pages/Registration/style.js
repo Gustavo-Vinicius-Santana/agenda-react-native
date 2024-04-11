@@ -11,6 +11,20 @@ const styles = StyleSheet.create({
         marginTop: 15,
         width:'100%',
         alignItems:'center',
+    },
+    btn:{
+        borderRadius:50,
+        alignItems:"center",
+        justifyContent:"center",
+        width:"50%",
+        padding: 5,
+        marginTop: 15,
+        backgroundColor: 'black'
+
+    },
+    textBtn:{
+        fontSize: 20,
+        color:"white",
     }
 })
 

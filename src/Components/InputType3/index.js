@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import styles from './style';
 
-export default function InputType3(){
-    [data, setData] = useState('');
+export default function InputType3({state, setState}){
 
     function dataMasked(input) {
         const dataClean = input.replace(/\D/g, '');
@@ -17,7 +16,7 @@ export default function InputType3(){
             return result;
         })
 
-        setData(dataMask)
+        setState(dataMask)
     }
 
     return(
@@ -30,7 +29,7 @@ export default function InputType3(){
             selectionColor="#000000"
             keyboardType='numeric'
             onChangeText={dataMasked}
-            value={data}
+            value={state}
             maxLength={10}
             />
         </View>

@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import styles from './style';
 
-export default function InputType1 ({labelName, example}) {
-
-    [valor, setValor] = useState('');
-    const limit = 30
+export default function InputType1 ({labelName, example, state, setState}) {
 
     return(
         <View>
@@ -15,12 +12,12 @@ export default function InputType1 ({labelName, example}) {
             style={styles.input}
             placeholder={example}
             selectionColor="#000000"
-            onChangeText={setValor}
-            value={valor}
-            maxLength={limit}
+            onChangeText={setState}
+            value={state}
+            maxLength={30}
             />
 
-            <Text style={styles.cont}>{valor.length}/30</Text>
+            <Text style={styles.cont}>{state ? state.length : 0}/30</Text>
         </View>
 
     )

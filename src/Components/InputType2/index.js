@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import styles from './style';
 
-export default function InputType2(){
+export default function InputType2({state, setState}){
     [number, setNumber] = useState('');
-    [numberCaracter, setNumberCaracter] = useState('');
 
     function numberMask(input){
         const numberPure = input.replace(/\D/g, '');
@@ -19,7 +18,7 @@ export default function InputType2(){
             return result;
         })
 
-        setNumberCaracter(numberMasked)
+        setState(numberMasked)
 
     }
 
@@ -32,7 +31,7 @@ export default function InputType2(){
             placeholder='EX: 83 98808-2293'
             selectionColor="#000000"
             onChangeText={numberMask}
-            value={numberCaracter}
+            value={state}
             keyboardType='numeric'
             maxLength={13}
             />

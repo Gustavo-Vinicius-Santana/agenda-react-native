@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     input:{
         width: 125,
         borderBottomWidth: 1,
-        paddingLeft:25,
+        paddingLeft:15,
     }
 })
 
