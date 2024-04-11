@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    boxRegister:{
+        marginTop: 15,
+        width:'100%',
+        alignItems:'center',
     }
 })
 
