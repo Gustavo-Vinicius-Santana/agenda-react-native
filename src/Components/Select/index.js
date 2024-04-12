@@ -10,7 +10,6 @@ export default function SelectSexo({setState}) {
 
     return(
         <View style={styles.boxSelect}>
-            <Text style={styles.labelSelect}>Sexo</Text>
             <RNPickerSelect
                 onValueChange={(value) => setState(value)}
                 useNativeAndroidPickerStyle={false}
@@ -20,7 +19,7 @@ export default function SelectSexo({setState}) {
                     placeholder: styles.placeholder,
                     headlessAndroidContainer: styles.headlessAndroidContainer,
                   }}
-                placeholder={{ label: 'Escolha o sexo', value: null }}
+                placeholder={{ label: 'Escolha o sexo', value: '' }}
                 items={[
                     { label: 'Masculino', value: 'masculino' },
                     { label: 'Feminino', value: 'feminino' },

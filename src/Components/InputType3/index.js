@@ -21,8 +21,6 @@ export default function InputType3({state, setState}){
 
     return(
         <View>
-            <Text style={styles.labelInput}>Ano de nascimento</Text>
-
             <TextInput
             style={styles.input}
             placeholder='DD/MM/AAAA'

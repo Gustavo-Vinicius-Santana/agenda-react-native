@@ -12,6 +12,15 @@ const styles = StyleSheet.create({
         width:'100%',
         alignItems:'center',
     },
+    labelInput: {
+        fontSize: 14,
+        marginBottom:5
+    },
+    labelInputSelect:{
+        fontSize: 14,
+        marginBottom:5,
+        textAlign: 'center',
+    },
     btn:{
         borderRadius:50,
         alignItems:"center",

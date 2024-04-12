@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import styles from './style';
 
-export default function InputType1 ({labelName, example, state, setState}) {
+export default function InputType1 ({example, state, setState}) {
 
     return(
         <View>
-            <Text style={styles.labelInput}>{labelName}</Text>
-
             <TextInput
             style={styles.input}
             placeholder={example}

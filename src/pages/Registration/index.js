@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useState,  useEffect } from 'react';
+import { View, Text, TouchableOpacity, Pressable, Keyboard, Vibration} from 'react-native';
 
 import styles from './style';
 
@@ -11,33 +11,75 @@ import SelectSexo from '../../Components/Select';
 
 
 export default function Registration () {
-
     [nome, setNome] = useState('');
     [numero, setNumero] = useState('');
     [email, setEmail] = useState('');
     [sexo, setSexo] = useState('');
     [ano, setAno] = useState('');
+    [dados, setDados] = useState([]);
+
+    [voidCheck, setVoidCheck] = useState(false);
+    [check, setChek] = useState(false);
+
+    useEffect(() => {
+        console.log(dados);
+    }, [dados]);
+
+    function submitForm() {
+        if(nome === '' || numero === '' || email === '' || sexo === '' || ano === ''){
+            setVoidCheck(true);
+            setChek(false);
+            Vibration.vibrate();
+        }else{
+            setVoidCheck(false);
+            setChek(true);
+            setDados((arr) => [...arr, { id: dados.length, name: nome, phone: numero, mail: email, genre: sexo, year: ano }]);
+
+            setNome('');
+            setNumero('');
+            setEmail('');
+            setSexo('');
+            setAno('');
+        }
+    };
+
 
     return(
-        <View>
+        <Pressable onPress={Keyboard.dismiss}>
             <Text style={styles.titulo}>TELA DE REGISTRO</Text>
 
             <View style={styles.boxRegister}>
-                <InputType1 labelName='Nome' example='EX: Pedro Ricardo' state={nome} setState={setNome} />
 
-                <InputType2 state={numero} setState={setNumero}/>
+                <View>
+                    <Text style={[styles.labelInput, {color: voidCheck ? 'red' : 'black'}]}>{voidCheck ? 'Nome*' : 'Nome'}</Text>
+                    <InputType1 example='EX: Pedro Ricardo' state={nome} setState={setNome} />
+                </View>
 
-                <InputType1 labelName='Email' example='EX: gugu@gmail.com' state={email} setState={setEmail}/>
+                <View>
+                    <Text style={[styles.labelInput, {color: voidCheck ? 'red' : 'black'}]}>{voidCheck ? 'Numero*' : 'Numero'}</Text>
+                    <InputType2 state={numero} setState={setNumero}/>
+                </View>
 
-                <SelectSexo state={sexo} setState={setSexo}/>
+                <View>
+                    <Text style={[styles.labelInput, {color: voidCheck ? 'red' : 'black'}]}>{voidCheck ? 'Email*' : 'Email'}</Text>
+                    <InputType1 example='EX: gugu@gmail.com' state={email} setState={setEmail}/>
+                </View>
 
-                <InputType3 state={ano} setState={setAno}/>
+                <View>
+                    <Text style={[styles.labelInputSelect, {color: voidCheck ? 'red' : 'black'}]}>{voidCheck ? 'Sexo*' : 'Sexo'}</Text>
+                    <SelectSexo state={sexo} setState={setSexo}/>
+                </View>
 
-                <TouchableOpacity style={styles.btn}>
+                <View>
+                    <Text style={[styles.labelInput, {color: voidCheck ? 'red' : 'black'}]}>{voidCheck ? 'Ano de nascimento*' : 'Ano de nascimento'}</Text>
+                    <InputType3 state={ano} setState={setAno}/>
+                </View>
+
+                <TouchableOpacity style={styles.btn} onPress={submitForm}>
                     <Text style={styles.textBtn}>REGISTRAR</Text>
                 </TouchableOpacity>
 
             </View>
-        </View>
+        </Pressable>
     )
 }

@@ -5,10 +5,6 @@ const styles = StyleSheet.create({
     boxSelect:{
         width: 200,
         marginBottom: 15,
-    },labelSelect:{
-        fontSize: 14,
-        textAlign: 'center',
-        marginBottom:5,
     },inputIOS: {
         fontSize: 16,
         paddingVertical: 12,

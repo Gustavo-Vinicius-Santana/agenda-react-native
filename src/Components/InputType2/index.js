@@ -24,8 +24,6 @@ export default function InputType2({state, setState}){
 
     return(
         <View>
-            <Text style={styles.labelInput}>Numero</Text>
-
             <TextInput
             style={styles.input}
             placeholder='EX: 83 98808-2293'
