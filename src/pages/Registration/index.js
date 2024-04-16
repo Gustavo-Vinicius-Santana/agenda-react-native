@@ -46,8 +46,6 @@ export default function Registration () {
 
     return(
         <Pressable onPress={Keyboard.dismiss}>
-            <Text style={styles.titulo}>TELA DE REGISTRO</Text>
-
             <View style={styles.boxRegister}>
 
                 <View>

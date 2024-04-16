@@ -1,12 +1,6 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    titulo:{
-        textAlign: 'center',
-        marginTop: 20,
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
     boxRegister:{
         marginTop: 15,
         width:'100%',
@@ -29,7 +23,6 @@ const styles = StyleSheet.create({
         padding: 5,
         marginTop: 15,
         backgroundColor: 'black'
-
     },
     textBtn:{
         fontSize: 20,

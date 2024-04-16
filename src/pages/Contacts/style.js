@@ -1,25 +1,36 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    titulo:{
-        textAlign: 'center',
-        marginTop: 20,
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
     boxContatos:{
         width: '100%',
         alignItems:"center",
     },boxItem:{
         marginTop: 15,
         marginBottom: 15,
-        width: '50%',
-    },clickInfo:{
-        marginTop:4,
-        fontSize: 15,
-        color: "#ff0033",
-        fontWeight: "bold",
+        padding: 15,
+        borderRadius: 25,
+        width: '60%',
+        borderWidth: 1,
+    },infoLabel:{
+        fontSize:16,
+        fontWeight:'bold',
+    },info:{
+        fontSize:16,
+        fontWeight:'normal',
+    },
+    boxClickInfo:{
+        alignItems: 'center',
+        marginTop:15,
+    },
+    clickInfo:{
         textAlign:'center',
+        fontSize: 15,
+        fontWeight: "bold",
+        padding:5,
+        width: '75%',
+        borderRadius: 50,
+        backgroundColor: 'black',
+        color: "white",
     }
 })
 

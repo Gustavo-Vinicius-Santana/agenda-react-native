@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,19 +18,37 @@ const Tab = createBottomTabNavigator();
 
 function Tabs(){
   return(
-    <Tab.Navigator>
+    <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === 'Registration') {
+          iconName = focused
+            ? 'person-add-outline'
+            : 'person-add-outline';
+        } else if (route.name === 'Contacts') {
+          iconName = focused ? 'people-outline' : 'people-outline';
+        }
+
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: 'black',
+      tabBarInactiveTintColor: '#A9A9A9',
+    })}
+    >
       <Tab.Screen name='Registration' component={Registration}
       options={
         {
-          title: 'REGISTRO',
+          title: 'ADICIONAR CONTATO',
           headerStyle:{
-            backgroundColor: '#333333',
+            backgroundColor: '#F0F0F0',
           },
-          headerTintColor:'#fff',
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontSize: 25,
+            fontSize: 22,
+            borderBottomWidth: 1,
           }
         }
       }
@@ -37,15 +57,15 @@ function Tabs(){
       <Tab.Screen name='Contacts' component={Contacts}
       options={
         {
-          title: 'CONTATOS',
+          title: 'SEUS CONTATOS',
           headerStyle:{
-            backgroundColor: '#333333',
+            backgroundColor: '#F0F0F0',
           },
-          headerTintColor:'#fff',
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontSize: 25,
+            fontSize: 22,
+            borderBottomWidth: 1,
           }
         }
       }
