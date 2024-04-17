@@ -8,6 +8,7 @@ import InputType1 from '../../Components/InputType1';
 import InputType2 from '../../Components/InputType2';
 import InputType3 from '../../Components/InputType3';
 import SelectSexo from '../../Components/Select';
+import ModalAviso from '../../Components/ModalAvisos'
 
 export default function Information({navigation, route }){
     [nome, setNome] = useState(route.params?.nome);
@@ -19,6 +20,7 @@ export default function Information({navigation, route }){
 
     [voidCheck, setVoidCheck] = useState(false);
     [check, setChek] = useState(false);
+    [modalVisivel, setModalVisivel] = useState(false);
 
     const atualizarContato = async () => {
         try {
@@ -52,6 +54,7 @@ export default function Information({navigation, route }){
             setVoidCheck(false);
             setChek(true);
             atualizarContato();
+            setModalVisivel(true);
         }
     };
 
@@ -75,7 +78,8 @@ export default function Information({navigation, route }){
 
     return(
         <Pressable onPress={Keyboard.dismiss}>
-            <Text>{idUser}</Text>
+
+            <ModalAviso aviso='Usuario editado'  modalVisivel={modalVisivel} setModalVisivel={setModalVisivel}/>
 
             <View style={styles.boxMain}>
                 <Text style={styles.titulo}> TELA DE INFORMAÇÕES</Text>

@@ -1,7 +1,6 @@
 import React, { useState,  useEffect } from 'react';
-import { View, Text, TouchableOpacity, Pressable, Keyboard, Vibration} from 'react-native';
+import { View, Text, TouchableOpacity, Pressable, Keyboard, Vibration, Modal, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 import styles from './style';
 
@@ -9,6 +8,7 @@ import InputType1 from '../../Components/InputType1';
 import InputType2 from '../../Components/InputType2';
 import InputType3 from '../../Components/InputType3';
 import SelectSexo from '../../Components/Select';
+import ModalAviso from '../../Components/ModalAvisos';
 
 
 
@@ -46,6 +46,7 @@ export default function Registration ({navigation, route}) {
 
     [voidCheck, setVoidCheck] = useState(false);
     [check, setChek] = useState(false);
+    [modalVisivel, setModalVisivel] = useState(false);
 
     function submitForm() {
         if(nome === '' || numero === '' || email === '' || sexo === '' || ano === ''){
@@ -78,11 +79,13 @@ export default function Registration ({navigation, route}) {
             setEmail('');
             setSexo('');
             setAno('');
+            setModalVisivel(true);
         }
     };
     return(
         <Pressable onPress={Keyboard.dismiss}>
             <View style={styles.boxRegister}>
+                <ModalAviso aviso='Contato cadastrado'  modalVisivel={modalVisivel} setModalVisivel={setModalVisivel}/>
 
                 <View>
                     <Text style={[styles.labelInput, {color: voidCheck ? 'red' : 'black'}]}>{voidCheck ? 'Nome*' : 'Nome'}</Text>
