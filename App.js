@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -16,65 +16,71 @@ import Registration from './src/pages/Registration';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Tabs(){
-  return(
-    <Tab.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
 
-        if (route.name === 'Registration') {
-          iconName = focused
-            ? 'person-add-outline'
-            : 'person-add-outline';
-        } else if (route.name === 'Contacts') {
-          iconName = focused ? 'people-outline' : 'people-outline';
-        }
-
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-      tabBarActiveTintColor: 'black',
-      tabBarInactiveTintColor: '#A9A9A9',
-    })}
-    >
-      <Tab.Screen name='Registration' component={Registration}
-      options={
-        {
-          title: 'ADICIONAR CONTATO',
-          headerStyle:{
-            backgroundColor: '#F0F0F0',
-          },
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 22,
-            borderBottomWidth: 1,
-          }
-        }
-      }
-
-      />
-      <Tab.Screen name='Contacts' component={Contacts}
-      options={
-        {
-          title: 'SEUS CONTATOS',
-          headerStyle:{
-            backgroundColor: '#F0F0F0',
-          },
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 22,
-            borderBottomWidth: 1,
-          }
-        }
-      }
-      />
-    </Tab.Navigator>
-  )
-}
 
 export default function App() {
+  [dados, setDados] = useState([]);
+
+  function Tabs(){
+    return(
+      <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Registration') {
+            iconName = focused
+              ? 'person-add-outline'
+              : 'person-add-outline';
+          } else if (route.name === 'Contacts') {
+            iconName = focused ? 'people-outline' : 'people-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'black',
+        tabBarInactiveTintColor: '#A9A9A9',
+      })}
+      >
+        <Tab.Screen name='Registration' component={Registration}
+        options={
+          {
+            title: 'ADICIONAR CONTATO',
+            headerStyle:{
+              backgroundColor: '#F0F0F0',
+            },
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 22,
+              borderBottomWidth: 1,
+            },
+            initialParams: { dados, setDados }
+          }
+        }
+
+        />
+        <Tab.Screen name='Contacts' component={Contacts}
+        options={
+          {
+            title: 'SEUS CONTATOS',
+            headerStyle:{
+              backgroundColor: '#F0F0F0',
+            },
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 22,
+              borderBottomWidth: 1,
+            },
+            initialParams: { dados, setDados }
+          }
+        }
+        />
+      </Tab.Navigator>
+    )
+  }
+
   return (
     <NavigationContainer>
       <StatusBar

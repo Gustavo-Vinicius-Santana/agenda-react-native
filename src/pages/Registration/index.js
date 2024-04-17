@@ -1,5 +1,7 @@
 import React, { useState,  useEffect } from 'react';
 import { View, Text, TouchableOpacity, Pressable, Keyboard, Vibration} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import styles from './style';
 
@@ -10,20 +12,52 @@ import SelectSexo from '../../Components/Select';
 
 
 
-export default function Registration () {
+export default function Registration ({route}) {
+    [localData, setLocalData] = useState([]);
+    useEffect(() => {
+        if (route.params) {
+            const { dados, setDados } = route.params;
+            console.log('Dados recebidos:', dados);
+        }else{
+            console.log('dados não recebidos')
+            fetchLocal()
+        }
+      }, [route.params]);
+
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('contatos');
+            return jsonValue != null ? JSON.parse(jsonValue) : [];
+        } catch (error) {
+            console.error('Erro ao ler os dados da AsyncStorage:', error);
+            return null;
+        }
+    };
+
+    const fetchData = async () => {
+        const retorno = await getData();
+        setDados(retorno);
+        console.log('dados do async:', retorno);
+        console.log('dados do state: ', dados);
+    };
+
+    const fetchLocal = async () => {
+        const retorno = await getData();
+        setLocalData(retorno);
+        console.log('dados da convergencia: ', localData)
+    };
+
+
     [nome, setNome] = useState('');
     [numero, setNumero] = useState('');
     [email, setEmail] = useState('');
     [sexo, setSexo] = useState('');
     [ano, setAno] = useState('');
-    [dados, setDados] = useState([]);
 
     [voidCheck, setVoidCheck] = useState(false);
     [check, setChek] = useState(false);
 
-    useEffect(() => {
-        console.log(dados);
-    }, [dados]);
+
 
     function submitForm() {
         if(nome === '' || numero === '' || email === '' || sexo === '' || ano === ''){
@@ -33,16 +67,27 @@ export default function Registration () {
         }else{
             setVoidCheck(false);
             setChek(true);
-            setDados((arr) => [...arr, { id: dados.length, name: nome, phone: numero, mail: email, genre: sexo, year: ano }]);
 
-            setNome('');
-            setNumero('');
-            setEmail('');
-            setSexo('');
-            setAno('');
+            const novoContato = { id: localData.length, name: nome, phone: numero, mail: email, genre: sexo, year: ano };
+            const novaLista = [...localData, novoContato];
+
+            setDados(novaLista);
+            AsyncStorage.setItem('contatos', JSON.stringify(novaLista))
+                .then(() => console.log('Contato salvo com sucesso!'))
+                .catch(error => console.error('Erro ao salvar contato:', error));
+            fetchData();
         }
     };
 
+    const limparContatos = async () => {
+        try {
+          await AsyncStorage.removeItem('contatos');
+          setDados([]);
+          console.log('Contatos removidos com sucesso!');
+        } catch (error) {
+          console.error('Erro ao limpar contatos da AsyncStorage:', error);
+        }
+      };
 
     return(
         <Pressable onPress={Keyboard.dismiss}>
@@ -75,6 +120,10 @@ export default function Registration () {
 
                 <TouchableOpacity style={styles.btn} onPress={submitForm}>
                     <Text style={styles.textBtn}>REGISTRAR</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.btn} onPress={limparContatos}>
+                    <Text style={styles.textBtn}>LIMPAR</Text>
                 </TouchableOpacity>
 
             </View>

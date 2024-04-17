@@ -1,62 +1,64 @@
-import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useState,  useEffect } from 'react'
+import { View, Text } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './style'
 
-export default function Contacts ({navigation}){
+export default function Contacts ({navigation, route}){
+    [localData, setLocalData] = useState([]);
+    useEffect(() => {
+        if (route.params) {
+            const { dados, setDados} = route.params;
+            setLocalData(dados);
+            console.log('Dados recebidos:', dados);
+        }else{
+            console.log('dados não recebidos.')
+            fetchLocal()
+        }
+      }, [route.params]);
+
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('contatos');
+            return jsonValue != null ? JSON.parse(jsonValue) : [];
+        } catch (error) {
+            console.error('Erro ao ler os dados da AsyncStorage:', error);
+            return null;
+        }
+    };
+
+    const fetchLocal = async () => {
+        const retorno = await getData();
+        setLocalData(retorno);
+        console.log('dados da tela de contatos: ', localData)
+    };
 
     return(
         <View style={styles.boxContatos}>
-            <View style={styles.boxItem}>
-                <Text style={styles.infoLabel}>NOME: <Text style={styles.info}>Pedro</Text> </Text>
-                <Text style={styles.infoLabel}>NUMERO: <Text style={styles.info}>83 98808-2293</Text> </Text>
+            {
+            localData.map(item => (
 
-                <View style={styles.boxClickInfo}>
-                    <Text style={styles.clickInfo} onPress={() => navigation.navigate('Information',
-                    {
-                        nome: 'pedro silvestre',
-                        sexo: 'masculino',
-                        idade: '18',
-                        telefone: '83 98808-2293',
-                        email: 'pedro@gmail.com'
-                    }
-                    )}> INFORMAÇÕES </Text>
+                <View style={styles.boxItem} key={item.id}>
+                    <Text style={styles.infoLabel}>NOME: <Text style={styles.info}>{item.name}</Text> </Text>
+                    <Text style={styles.infoLabel}>NUMERO: <Text style={styles.info}>{item.phone}</Text> </Text>
+
+                    <View style={styles.boxClickInfo}>
+                        <Text style={styles.clickInfo} onPress={() => navigation.navigate('Information',
+                        {
+                            nome: `${item.name}`,
+                            sexo: `${item.genre}`,
+                            idade: `${item.year}`,
+                            telefone: `${item.phone}`,
+                            email: `${item.mail}`
+                        }
+                        )}> INFORMAÇÕES </Text>
+                    </View>
                 </View>
-            </View>
+            ))
+            }
 
-            <View style={styles.boxItem}>
-                <Text style={styles.infoLabel}>NOME: <Text style={styles.info}>maria tereza</Text> </Text>
-                <Text style={styles.infoLabel}>NUMERO: <Text style={styles.info}>83 4002-8922</Text> </Text>
 
-                <View style={styles.boxClickInfo}>
-                    <Text style={styles.clickInfo} onPress={() => navigation.navigate('Information',
-                    {
-                        nome: 'maria tereza',
-                        sexo: 'feminino',
-                        idade: '25',
-                        telefone: '83 4002-8922',
-                        email: 'maria@gmail.com'
-                    }
-                    )}> INFORMAÇÕES </Text>
-                </View>
-            </View>
 
-            <View style={styles.boxItem}>
-                <Text style={styles.infoLabel}>NOME: <Text style={styles.info}>Guilherme Ricardo</Text> </Text>
-                <Text style={styles.infoLabel}>NUMERO: <Text style={styles.info}>83 98508-9994</Text> </Text>
-
-                <View style={styles.boxClickInfo}>
-                    <Text style={styles.clickInfo} onPress={() => navigation.navigate('Information',
-                    {
-                        nome: 'Guilherme Ricardo',
-                        sexo: 'masculino',
-                        idade: '21',
-                        telefone: '83 98508-9994',
-                        email: 'gui@gmail.com'
-                    }
-                    )}> INFORMAÇÕES </Text>
-                </View>
-            </View>
 
         </View>
 
