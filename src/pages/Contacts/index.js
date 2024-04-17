@@ -45,6 +45,7 @@ export default function Contacts ({navigation, route}){
                     <View style={styles.boxClickInfo}>
                         <Text style={styles.clickInfo} onPress={() => navigation.navigate('Information',
                         {
+                            id: `${item.id}`,
                             nome: `${item.name}`,
                             sexo: `${item.genre}`,
                             idade: `${item.year}`,

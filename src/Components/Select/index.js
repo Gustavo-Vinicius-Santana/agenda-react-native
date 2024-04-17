@@ -6,7 +6,7 @@ import styles from './style';
 import RNPickerSelect from 'react-native-picker-select';
 
 
-export default function SelectSexo({setState}) {
+export default function SelectSexo({state, setState}) {
 
     return(
         <View style={styles.boxSelect}>
@@ -25,6 +25,7 @@ export default function SelectSexo({setState}) {
                     { label: 'Feminino', value: 'feminino' },
                     { label: 'Outro', value: 'outro' },
                 ]}
+                value={state}
             />
         </View>
     )
