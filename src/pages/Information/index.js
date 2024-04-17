@@ -24,7 +24,9 @@ export default function Information({navigation, route }){
         try {
           const contatosString = await AsyncStorage.getItem('contatos');
             let contatos = JSON.parse(contatosString);
-            contatos[idUser] = {
+            idUser = parseInt(idUser, 10)
+            const indice = contatos.findIndex(objeto => objeto.id === idUser);
+            contatos[indice] = {
                 id: idUser,
                 name: nome,
                 phone: numero,
@@ -41,7 +43,7 @@ export default function Information({navigation, route }){
         }
     };
 
-    function submitForm() {
+    function submitFormEdit() {
         if(nome === '' || numero === '' || email === '' || sexo === '' || ano === ''){
             setVoidCheck(true);
             setChek(false);
@@ -52,24 +54,28 @@ export default function Information({navigation, route }){
             atualizarContato();
         }
     };
-    const getAsync = async () => {
-        try {
-          const contatosString = await AsyncStorage.getItem('contatos');
-            let contatos = JSON.parse(contatosString);
-            console.log('dado do Async: ', contatos)
 
-        }catch (error) {
-            console.error('Erro ao atualizar contato:', error);
+    const excluirContato = async () => {
+        try {
+            const contatosString = await AsyncStorage.getItem('contatos');
+            let contatos = JSON.parse(contatosString);
+
+            idUser = parseInt(idUser, 10)
+            const indice = contatos.findIndex(objeto => objeto.id === idUser);
+
+            contatos.splice(indice, 1);
+            await AsyncStorage.setItem('contatos', JSON.stringify(contatos));
+            console.log('Contato excluído com sucesso!');
+            console.log('Contatos restantes: ', contatos);
+            navigation.navigate('Tabs');
+        } catch (error) {
+            console.error('Erro ao excluir contato:', error);
         }
     };
 
-    function mostrar(){
-        getAsync();
-
-    }
-
     return(
         <Pressable onPress={Keyboard.dismiss}>
+            <Text>{idUser}</Text>
 
             <View style={styles.boxMain}>
                 <Text style={styles.titulo}> TELA DE INFORMAÇÕES</Text>
@@ -99,12 +105,12 @@ export default function Information({navigation, route }){
                     <InputType3 state={ano} setState={setAno}/>
                 </View>
 
-                <TouchableOpacity style={styles.btn} onPress={submitForm}>
+                <TouchableOpacity style={styles.btnSave} onPress={submitFormEdit}>
                     <Text style={styles.textBtn}>SALVAR ALTERAÇÕES</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btn} onPress={mostrar}>
-                    <Text style={styles.textBtn}>MOSTRAR NO ASYNC</Text>
+                <TouchableOpacity style={styles.btnExclude} onPress={excluirContato}>
+                    <Text style={styles.textBtn}>EXLUIR CONTATO</Text>
                 </TouchableOpacity>
 
             </View>

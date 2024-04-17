@@ -56,7 +56,16 @@ export default function Registration ({navigation, route}) {
             setVoidCheck(false);
             setChek(true);
 
-            const novoContato = { id: localPageData.length, name: nome, phone: numero, mail: email, genre: sexo, year: ano };
+            let newId = 0;
+            if (localPageData.length === 0){
+                newId = localPageData.length
+            }else{
+                let preId = localPageData[localPageData.length - 1];
+                let objtId = preId.id;
+                newId = objtId + 1
+            }
+
+            const novoContato = { id: newId, name: nome, phone: numero, mail: email, genre: sexo, year: ano };
             const novaLista = [...localPageData, novoContato];
 
             setLocalPageData(novaLista);
@@ -64,7 +73,6 @@ export default function Registration ({navigation, route}) {
                 .then(() => console.log('Contato salvo com sucesso!'))
                 .catch(error => console.error('Erro ao salvar contato:', error));
             SyncStorage();
-
             setNome('');
             setNumero('');
             setEmail('');

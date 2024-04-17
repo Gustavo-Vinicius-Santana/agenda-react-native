@@ -58,11 +58,18 @@ export default function Contacts ({navigation, route}){
                         )}> INFORMAÇÕES </Text>
                     </View>
                 </View>
-            ))
-            }
+            ))}
+
+            {localData.length  === 0
+            ?
+            (<Text></Text>)
+            :
+            (
             <TouchableOpacity style={styles.btn} onPress={limparContatos}>
-                    <Text style={styles.textBtn}>LIMPAR</Text>
+                <Text style={styles.textBtn}>LIMPAR</Text>
             </TouchableOpacity>
+            )}
+
         </View>
 
     )

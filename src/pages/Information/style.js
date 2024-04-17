@@ -22,11 +22,20 @@ const styles = StyleSheet.create({
         marginBottom:5,
         textAlign: 'center',
     },
-    btn:{
+    btnSave:{
         borderRadius:50,
         alignItems:"center",
         justifyContent:"center",
         width:"60%",
+        padding: 7,
+        marginTop: 15,
+        backgroundColor: 'black'
+    },
+    btnExclude:{
+        borderRadius:50,
+        alignItems:"center",
+        justifyContent:"center",
+        width:"50%",
         padding: 7,
         marginTop: 15,
         backgroundColor: 'black'
