@@ -27,7 +27,7 @@ export default function Registration ({navigation, route}) {
     const SyncStorage = async () => {
         const retorno = await getDataAsyncStorage();
         setLocalPageData(retorno);
-        console.log('dados da convergencia: ', localData)
+        console.log('dados da convergencia: ', localPageData)
     };
 
     useEffect(() => {

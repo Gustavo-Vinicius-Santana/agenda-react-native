@@ -29,11 +29,9 @@ export default function App() {
           let iconName;
 
           if (route.name === 'Registration') {
-            iconName = focused
-              ? 'person-add-outline'
-              : 'person-add-outline';
+            iconName = focused ? 'person-add': 'person-add-outline';
           } else if (route.name === 'Contacts') {
-            iconName = focused ? 'people-outline' : 'people-outline';
+            iconName = focused ? 'people' : 'people-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -55,7 +53,7 @@ export default function App() {
               fontSize: 22,
               borderBottomWidth: 1,
             },
-            initialParams: { dados, setDados }
+            initialParams: { dados, setDados },
           }
         }
 
