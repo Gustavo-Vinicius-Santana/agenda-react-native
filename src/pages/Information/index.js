@@ -9,7 +9,7 @@ import InputType2 from '../../Components/InputType2';
 import InputType3 from '../../Components/InputType3';
 import SelectSexo from '../../Components/Select';
 
-export default function Information({ route }){
+export default function Information({navigation, route }){
     [nome, setNome] = useState(route.params?.nome);
     [numero, setNumero] = useState(route.params?.telefone);
     [email, setEmail] = useState(route.params?.email);

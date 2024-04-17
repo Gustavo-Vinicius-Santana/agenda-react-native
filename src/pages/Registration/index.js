@@ -12,19 +12,9 @@ import SelectSexo from '../../Components/Select';
 
 
 
-export default function Registration ({route}) {
-    [localData, setLocalData] = useState([]);
-    useEffect(() => {
-        if (route.params) {
-            const { dados, setDados } = route.params;
-            console.log('Dados recebidos:', dados);
-        }else{
-            console.log('dados não recebidos')
-            fetchLocal()
-        }
-      }, [route.params]);
-
-    const getData = async () => {
+export default function Registration ({navigation, route}) {
+    [localPageData, setLocalPageData] = useState([]);
+    const getDataAsyncStorage = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('contatos');
             return jsonValue != null ? JSON.parse(jsonValue) : [];
@@ -34,18 +24,18 @@ export default function Registration ({route}) {
         }
     };
 
-    const fetchData = async () => {
-        const retorno = await getData();
-        setDados(retorno);
-        console.log('dados do async:', retorno);
-        console.log('dados do state: ', dados);
-    };
-
-    const fetchLocal = async () => {
-        const retorno = await getData();
-        setLocalData(retorno);
+    const SyncStorage = async () => {
+        const retorno = await getDataAsyncStorage();
+        setLocalPageData(retorno);
         console.log('dados da convergencia: ', localData)
     };
+
+    useEffect(() => {
+        const loadPageActive = navigation.addListener('focus', () => {
+            SyncStorage();
+        });
+        return loadPageActive;
+    }, [navigation]);
 
 
     [nome, setNome] = useState('');
@@ -57,8 +47,6 @@ export default function Registration ({route}) {
     [voidCheck, setVoidCheck] = useState(false);
     [check, setChek] = useState(false);
 
-
-
     function submitForm() {
         if(nome === '' || numero === '' || email === '' || sexo === '' || ano === ''){
             setVoidCheck(true);
@@ -68,27 +56,22 @@ export default function Registration ({route}) {
             setVoidCheck(false);
             setChek(true);
 
-            const novoContato = { id: localData.length, name: nome, phone: numero, mail: email, genre: sexo, year: ano };
-            const novaLista = [...localData, novoContato];
+            const novoContato = { id: localPageData.length, name: nome, phone: numero, mail: email, genre: sexo, year: ano };
+            const novaLista = [...localPageData, novoContato];
 
-            setDados(novaLista);
+            setLocalPageData(novaLista);
             AsyncStorage.setItem('contatos', JSON.stringify(novaLista))
                 .then(() => console.log('Contato salvo com sucesso!'))
                 .catch(error => console.error('Erro ao salvar contato:', error));
-            fetchData();
+            SyncStorage();
+
+            setNome('');
+            setNumero('');
+            setEmail('');
+            setSexo('');
+            setAno('');
         }
     };
-
-    const limparContatos = async () => {
-        try {
-          await AsyncStorage.removeItem('contatos');
-          setDados([]);
-          console.log('Contatos removidos com sucesso!');
-        } catch (error) {
-          console.error('Erro ao limpar contatos da AsyncStorage:', error);
-        }
-      };
-
     return(
         <Pressable onPress={Keyboard.dismiss}>
             <View style={styles.boxRegister}>
@@ -120,10 +103,6 @@ export default function Registration ({route}) {
 
                 <TouchableOpacity style={styles.btn} onPress={submitForm}>
                     <Text style={styles.textBtn}>REGISTRAR</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.btn} onPress={limparContatos}>
-                    <Text style={styles.textBtn}>LIMPAR</Text>
                 </TouchableOpacity>
 
             </View>
