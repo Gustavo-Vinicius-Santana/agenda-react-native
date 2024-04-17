@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         borderRadius:50,
         alignItems:"center",
         justifyContent:"center",
-        width:"50%",
+        width: 250,
         padding: 5,
         marginTop: 15,
         backgroundColor: 'black'
@@ -44,7 +44,11 @@ const styles = StyleSheet.create({
     textBtn:{
         fontSize: 20,
         color:"white",
-    }
+    },
+    scrollViewContent: {
+        width: '100%',
+        alignItems: 'center',
+      },
 })
 
 export default styles

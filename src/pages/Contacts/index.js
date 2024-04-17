@@ -1,5 +1,5 @@
 import React, { useState,  useEffect } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './style'
@@ -38,8 +38,10 @@ export default function Contacts ({navigation, route}){
       };
     return(
         <View style={styles.boxContatos}>
-            {
-            localData.map(item => (
+            <ScrollView contentContainerStyle={styles.scrollViewContent}
+            showsVerticalScrollIndicator={false}
+            >
+                {localData.map(item => (
 
                 <View style={styles.boxItem} key={item.id}>
                     <Text style={styles.infoLabel}>NOME: <Text style={styles.info}>{item.name}</Text> </Text>
@@ -58,18 +60,18 @@ export default function Contacts ({navigation, route}){
                         )}> INFORMAÇÕES </Text>
                     </View>
                 </View>
-            ))}
+                ))}
 
-            {localData.length  === 0
-            ?
-            (<Text></Text>)
-            :
-            (
-            <TouchableOpacity style={styles.btn} onPress={limparContatos}>
-                <Text style={styles.textBtn}>LIMPAR</Text>
-            </TouchableOpacity>
-            )}
-
+                {localData.length  === 0
+                ?
+                (<Text></Text>)
+                :
+                (
+                <TouchableOpacity style={styles.btn} onPress={limparContatos}>
+                    <Text style={styles.textBtn}>LIMPAR</Text>
+                </TouchableOpacity>
+                )}
+            </ScrollView>
         </View>
 
     )
