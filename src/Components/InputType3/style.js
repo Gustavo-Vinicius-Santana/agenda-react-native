@@ -6,7 +6,11 @@ const styles = StyleSheet.create({
         width: 125,
         borderBottomWidth: 1,
         paddingLeft:15,
-    }
+        color: 'black',
+    },
+    textCentro:{
+        textAlign: "center",
+    },
 })
 
 export default styles
