@@ -19,7 +19,6 @@ export default function Contacts ({navigation, route}){
     const fetchLocal = async () => {
         const retorno = await getData();
         setLocalData(retorno);
-        console.log('dados da tela de contatos: ', localData)
     };
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -31,7 +30,6 @@ export default function Contacts ({navigation, route}){
         try {
           await AsyncStorage.removeItem('contatos');
           setDados([]);
-          console.log('Contatos removidos com sucesso!');
         } catch (error) {
           console.error('Erro ao limpar contatos da AsyncStorage:', error);
         }

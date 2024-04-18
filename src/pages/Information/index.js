@@ -37,8 +37,6 @@ export default function Information({navigation, route }){
                 year: ano
               };
             await AsyncStorage.setItem('contatos', JSON.stringify(contatos));
-            console.log('Contato atualizado com sucesso!');
-            console.log('dado mudado: ', contatos)
 
         }catch (error) {
             console.error('Erro ao atualizar contato:', error);
@@ -68,8 +66,6 @@ export default function Information({navigation, route }){
 
             contatos.splice(indice, 1);
             await AsyncStorage.setItem('contatos', JSON.stringify(contatos));
-            console.log('Contato excluído com sucesso!');
-            console.log('Contatos restantes: ', contatos);
             navigation.navigate('Tabs');
         } catch (error) {
             console.error('Erro ao excluir contato:', error);
