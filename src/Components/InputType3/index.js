@@ -1,35 +1,71 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, TextInput, Pressable, Platform } from 'react-native';
+
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 import styles from './style';
 
 export default function InputType3({state, setState}){
+    [date, setDate] = useState(new Date());
+    [showPicker, setShowPicker] = useState(false);
+    [ano, setAno] = useState('')
 
-    function dataMasked(input) {
-        const dataClean = input.replace(/\D/g, '');
-
-        let dataMask = dataClean.replace(/(\d{2})(\d{0,2})(\d{0,4})/,
-        function(_, day, month, year) {
-            let result = '';
-            if (day) result += day;
-            if (month) result += (month.length >= 1 ? '/' : '') + month;
-            if (year) result += (year.length >= 1 ? '/' : '') + year;
-            return result;
-        })
-
-        setState(dataMask)
+    const toggleDatePicker = () => {
+        setShowPicker(!showPicker);
     }
+
+    const onChangeDate = ( { type }, selectedDate ) =>{
+        if(type == "set"){
+            const currentDate = selectedDate;
+            setDate(currentDate);
+
+            if(Platform.OS === "android"){
+                toggleDatePicker();
+                setAno(formatDate(currentDate))
+            }
+        }else{
+            toggleDatePicker();
+        }
+    }
+
+    const formatDate = (rawDate) => {
+        let date = new Date(rawDate);
+
+        let year = date.getFullYear();
+        let mounth = date.getMonth() + 1;
+        let day = date.getDay();
+
+        mounth = mounth < 10 ? `0${mounth}` : mounth;
+        day = day < 10 ? `0${day}` : day;
+
+        return `${day} - ${mounth} - ${year}`;
+    }
+
 
     return(
         <View>
-            <TextInput
-            style={styles.input}
-            placeholder='DD/MM/AAAA'
-            selectionColor="#000000"
-            keyboardType='numeric'
-            onChangeText={dataMasked}
-            value={state}
-            maxLength={10}
-            />
+            {showPicker && (
+                <DateTimePicker
+                mode="date"
+                display="spinner"
+                value={date}
+                onChange={onChangeDate}
+                />
+            )}
+
+            {!showPicker && (
+                <Pressable onPress={toggleDatePicker}>
+                    <TextInput
+                    style={styles.input}
+                    placeholder="DD/MM/YYYY"
+                    value={ano}
+                    editable={false}
+                    />
+                </Pressable>
+            )}
+
+
+
         </View>
     )
 }
